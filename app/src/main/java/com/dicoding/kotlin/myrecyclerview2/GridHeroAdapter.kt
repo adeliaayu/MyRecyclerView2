@@ -9,6 +9,13 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_grid_hero.view.*
 
 class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<GridHeroAdapter.GridViewHolder>() {
+
+    private var onItemClickCallBack: OnItemClickCallBack? = null
+
+    fun setOnItemClickCallBack(onItemClickCallBack: OnItemClickCallBack) {
+        this.onItemClickCallBack = onItemClickCallBack
+    }
+
     inner class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(hero: Hero) {
             with(itemView){
@@ -16,10 +23,12 @@ class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
                     .load(hero.photo)
                     .apply(RequestOptions().override(350,350))
                     .into(img_item_photo)
+
+                itemView.setOnClickListener { onItemClickCallBack?.onItemClicked(hero) }
             }
         }
-
     }
+
 
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): GridViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_grid_hero, viewGroup, false)
@@ -31,4 +40,8 @@ class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
     }
 
     override fun getItemCount(): Int = listHero.size
+
+    interface OnItemClickCallBack {
+        fun onItemClicked(data: Hero)
+    }
 }

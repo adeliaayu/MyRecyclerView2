@@ -10,6 +10,12 @@ import kotlinx.android.synthetic.main.item_row_hero.view.*
 
 class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<ListHeroAdapter.ListViewHolder>() {
 
+    private var onItemClickCallBack: OnItemClickCallBack? = null
+
+    fun setOnItemClickCallback(onItemClickCallBack: OnItemClickCallBack) {
+        this.onItemClickCallBack = onItemClickCallBack
+    }
+
     override fun onCreateViewHolder(viewGroup: ViewGroup, i: Int): ListViewHolder {
         val view = LayoutInflater.from(viewGroup.context).inflate(R.layout.item_row_hero,viewGroup, false)
         return ListViewHolder(view)
@@ -31,8 +37,13 @@ class ListHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adap
 
                 tv_item_name.text = hero.name
                 tv_item_description.text = hero.description
+
+                itemView.setOnClickListener { onItemClickCallBack?.onItemClicked(hero) }
             }
         }
+    }
 
+    interface OnItemClickCallBack {
+        fun onItemClicked(data: Hero)
     }
 }

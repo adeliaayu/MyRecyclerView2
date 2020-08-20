@@ -9,7 +9,7 @@ import com.bumptech.glide.request.RequestOptions
 import kotlinx.android.synthetic.main.item_grid_hero.view.*
 
 class GridHeroAdapter(private val listHero: ArrayList<Hero>) : RecyclerView.Adapter<GridHeroAdapter.GridViewHolder>() {
-    class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class GridViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(hero: Hero) {
             with(itemView){
                 Glide.with(itemView.context)
